@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Test Results</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+<header style="background:">
+    <h1 style="color: white">Test Results</h1>
+</header>
+<div class="container">
+
+    <p>
+    <center>
+        <h1 style="color: black">Percentage: {{ percentage }}%
+            <p>Score: {{ score }}</p>
+            <a href="/" style="color: black ">Rework the test</a></h1>
+    </center>
+    </p>
+
+</div>
+</body>
+</html>

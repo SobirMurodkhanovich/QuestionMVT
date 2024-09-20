@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Test Questions</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1 style="color: white">Algorithm Learn Center</h1>
+    </header>
+    <div class="container">
+        <form method="get" action="{% url 'question_view' %}">
+            <label for="level"><h3>Selected Level:</h3></label>
+            <select id="level" name="level" onchange="this.form.submit()"">
+                <option value="beginner" {% if selected_level == 'beginner' %}selected{% endif %}>Beginner</option>
+                <option value="elementary" {% if selected_level == 'elementary' %}selected{% endif %}>Elementary</option>
+                <option value="intermediate" {% if selected_level == 'intermediate' %}selected{% endif %}>Intermediate</option>
+                <option value="pre-intermediate" {% if selected_level == 'pre-intermediate' %}selected{% endif %}>Pre-Intermediate</option>
+                <option value="upper-intermediate" {% if selected_level == 'upper-intermediate' %}selected{% endif %}>Upper-Intermediate</option>
+            </select>
+        </form>
+
+        <form method="post" action="{% url 'submit_answers' %}" id="test-form">
+            {% csrf_token %}
+            <input type="hidden" name="level" value="{{ selected_level }}">
+            {% for question in questions %}
+                <fieldset class="question-fieldset">
+                    <legend>{{ forloop.counter }}) {{ question.text }}</legend>
+                    <div class="answers-grid" >
+                        <div class="answer-option">
+                            <input type="radio" id="answer_{{ question.id }}_a" name="question_{{ question.id }}" value="{{ question.answers.all.0.id }}">
+                            <label for="answer_{{ question.id }}_a">{{ question.answers.all.0.text }}</label>
+                        </div>
+                        <div class="answer-option">
+                            <input type="radio" id="answer_{{ question.id }}_b" name="question_{{ question.id }}" value="{{ question.answers.all.1.id }}">
+                            <label for="answer_{{ question.id }}_b">{{ question.answers.all.1.text }}</label>
+                        </div>
+                        <div class="answer-option">
+                            <input type="radio" id="answer_{{ question.id }}_c" name="question_{{ question.id }}" value="{{ question.answers.all.2.id }}">
+                            <label for="answer_{{ question.id }}_c">{{ question.answers.all.2.text }}</label>
+                        </div>
+                    </div>
+                </fieldset>
+            {% endfor %}
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
